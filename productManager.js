@@ -37,11 +37,11 @@ class ProductManager {
     updateProduct = async(id, productToUpdate)=>{
         const products = await this.getProducts()
         const productById = products.find(item => item.id === id)
-        if(!productById) return `ERR There's no product with ID:${id}`
+        if(!productById) return `ERR There's no product with ID:${id}`;
         let updatedProducts = products.map(item => {
             if(item.id===id) return {...item,...productToUpdate}
         })
-        let updatedProduct = products.find(item => item.id===id);
+        let updatedProduct = updatedProducts.find(item => item.id===id);
         await fs.promises.writeFile(this.#path,JSON.stringify(updatedProducts,null,'\t'))
         return updatedProduct
     }
@@ -52,7 +52,7 @@ class ProductManager {
         if(!productById) return `ERR There's no product with ID: ${id}`
         let updatedProducts = []
         products.forEach(item => {
-            if(!item.id===id) {
+            if(item.id!==id) {
                 updatedProducts.push(item)
             } 
         });
